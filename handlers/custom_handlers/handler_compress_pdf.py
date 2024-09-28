@@ -2,9 +2,11 @@ import aspose.pdf as ap
 import io
 from aiogram import F
 from aiogram.types import BufferedInputFile
-
 from loader import dp, bot
 from aiogram import types
+from config_data.logger_config import setup_logging
+
+setup_logging()
 
 
 def compress_pdf(pdf_bytes):

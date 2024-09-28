@@ -1,6 +1,9 @@
 from aiogram import types
 from aiogram.filters.command import Command
 from loader import dp
+from config_data.logger_config import setup_logging
+
+setup_logging()
 
 
 @dp.message(Command("start"))

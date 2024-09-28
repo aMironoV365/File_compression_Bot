@@ -1,18 +1,12 @@
 from aiogram.filters import Command
-
 from loader import dp, bot
 import asyncio
-import logging
 from handlers.default_handlers.handler_start import send_welcome
 from handlers.custom_handlers.handler_compress_pdf import compress_pdf
 from handlers.default_handlers.commands import send_commands
+from config_data.logger_config import setup_logging
 
-
-logging.basicConfig(level=logging.INFO,
-                    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-                    filemode='w',
-                    filename='compression_bot.log',
-                    datefmt='%d/%m/%Y %H:%M:%S')
+setup_logging()
 
 
 async def main():

@@ -1,7 +1,9 @@
 from aiogram import types, F
 from aiogram.filters import Command
 from loader import dp
+from config_data.logger_config import setup_logging
 
+setup_logging()
 
 COMMANDS = [
     ("start", "Запустить бота"),
