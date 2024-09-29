@@ -56,7 +56,7 @@
 
 - **Python 3.12**
 - **aiogram** — для работы с Telegram API
-- **Aspose.PDF**, **Pillow** — для работы с файлами PDF и изображениями
+- **Aspose.PDF** — для работы с файлами PDF
 
 
 ## Использование
