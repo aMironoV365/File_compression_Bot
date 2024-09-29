@@ -9,7 +9,16 @@ from config_data.logger_config import setup_logging
 setup_logging()
 
 
-def compress_pdf(pdf_bytes):
+def compress_pdf(pdf_bytes: bytes) -> io.BytesIO:
+    """
+    Сжимает PDF-документ, используя библиотеку Aspose.PDF.
+
+    Аргументы:
+    - pdf_bytes (bytes): Байты исходного PDF-документа.
+
+    Возвращает:
+    - io.BytesIO: Байты сжатого PDF-документа.
+    """
     pdf_document = ap.Document(io.BytesIO(pdf_bytes))
     pdf_optimize_options = ap.optimization.OptimizationOptions()
     pdf_optimize_options.image_compression_options.compress_images = True
@@ -22,7 +31,13 @@ def compress_pdf(pdf_bytes):
 
 
 @dp.message(F.document.mime_type == "application/pdf")
-async def handle_document(message: types.Message):
+async def handle_document(message: types.Message) -> None:
+    """
+    Обрабатывает сообщение с PDF-документом, сжимает его и отправляет обратно.
+
+    Аргументы:
+    - message (types.Message): Сообщение с PDF-документом.
+    """
     file_id = message.document.file_id
     print(file_id)
     file_info = await bot.get_file(file_id)
