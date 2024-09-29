@@ -1,8 +1,9 @@
 from aiogram import Bot, Dispatcher
 from config_data.config import BOT_TOKEN
+import asyncio
 
 
-def initialize_bot() -> Bot:
+async def initialize_bot() -> Bot:
     """
     Инициализирует объект бота с использованием токена, полученного из переменных окружения.
 
@@ -12,7 +13,7 @@ def initialize_bot() -> Bot:
     return Bot(token=BOT_TOKEN)
 
 
-def initialize_dispatcher() -> Dispatcher:
+async def initialize_dispatcher() -> Dispatcher:
     """
     Инициализирует объект диспетчера для обработки сообщений.
 
@@ -22,6 +23,5 @@ def initialize_dispatcher() -> Dispatcher:
     return Dispatcher()
 
 
-# Инициализация бота и диспетчера
-bot = initialize_bot()
-dp = initialize_dispatcher()
+bot = asyncio.run(initialize_bot())
+dp = asyncio.run(initialize_dispatcher())

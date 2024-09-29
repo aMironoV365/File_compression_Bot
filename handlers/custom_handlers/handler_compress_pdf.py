@@ -9,7 +9,7 @@ from config_data.logger_config import setup_logging
 setup_logging()
 
 
-def compress_pdf(pdf_bytes: bytes) -> io.BytesIO:
+async def compress_pdf(pdf_bytes: bytes) -> io.BytesIO:
     """
     Сжимает PDF-документ, используя библиотеку Aspose.PDF.
 
@@ -21,9 +21,11 @@ def compress_pdf(pdf_bytes: bytes) -> io.BytesIO:
     """
     pdf_document = ap.Document(io.BytesIO(pdf_bytes))
     pdf_optimize_options = ap.optimization.OptimizationOptions()
+
     pdf_optimize_options.image_compression_options.compress_images = True
     pdf_optimize_options.image_compression_options.image_quality = 50
     pdf_document.optimize_resources(pdf_optimize_options)
+
     output_pdf = io.BytesIO()
     pdf_document.save(output_pdf)
     output_pdf.seek(0)
@@ -39,15 +41,12 @@ async def handle_document(message: types.Message) -> None:
     - message (types.Message): Сообщение с PDF-документом.
     """
     file_id = message.document.file_id
-    print(file_id)
     file_info = await bot.get_file(file_id)
-    print(file_info)
     file_path = file_info.file_path
-    print(file_path)
 
     try:
         document_file = await bot.download_file(file_path)
-        compressed_pdf = compress_pdf(document_file.read())
+        compressed_pdf = await compress_pdf(document_file.read())
         await message.reply_document(BufferedInputFile(compressed_pdf.read(), filename="compressed_pdf.pdf"))
     except Exception as e:
         await message.reply(f"Ошибка при загрузке файла: {e}")
